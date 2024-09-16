@@ -24,7 +24,7 @@ export interface RemoteConfig {
   /**
    * Object containing default values for configs.
    */
-  defaultConfig: { [key: string]: string | number | boolean };
+  defaultConfig: DefaultConfig;
 
   /**
    * The Unix timestamp in milliseconds of the last <i>successful</i> fetch, or negative one if
@@ -89,6 +89,13 @@ export interface RemoteConfig {
   getString(key: string): string;
 
   /**
+   * Get the value for the given key as a object.
+   * 
+   * Convenience method for calling <code>remoteConfig.getValue(key).asJson()</code>.
+   */
+  getJson(key: string): object | null;
+  
+  /**
    * Gets the {@link Value} for the given key.
    */
   getValue(key: string): Value;
@@ -133,6 +140,11 @@ export interface Value {
   asString(): string;
 
   /**
+   * Gets the value as a JSON object.
+   */
+  asJson(): object | null;
+
+  /**
    * Gets the {@link ValueSource} for the given key.
    */
   getSource(): ValueSource;
@@ -172,6 +184,13 @@ export type FetchStatus = 'no-fetch-yet' | 'success' | 'failure' | 'throttle';
  * Defines levels of Remote Config logging.
  */
 export type LogLevel = 'debug' | 'error' | 'silent';
+
+/**
+ * Defines default values type for configs.
+ */
+interface DefaultConfig {
+  [key: string]: string | number | boolean | DefaultConfig;
+}
 
 declare module '@firebase/component' {
   interface NameServiceMapping {

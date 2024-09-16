@@ -68,6 +68,17 @@ describe('Value', () => {
     });
   });
 
+  describe('asJson', () => {
+    it('returns static default json if source is static', () => {
+      expect(new Value('static').asJson()).to.eq(null);
+    });
+
+    it('returns the value as a json object', () => {
+      expect(new Value('default', '{"foo": "bar"}').asJson()).to.deep.eq({foo: 'bar'});
+      expect(new Value('default', 'not a valid json').asJson()).to.eq(null);
+    });
+  });
+
   describe('getSource', () => {
     it('returns the source of the value', () => {
       expect(new Value('default', 'test').getSource()).to.eq('default');

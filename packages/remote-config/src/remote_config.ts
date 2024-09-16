@@ -19,7 +19,8 @@ import { FirebaseApp } from '@firebase/app';
 import {
   RemoteConfig as RemoteConfigType,
   FetchStatus,
-  RemoteConfigSettings
+  RemoteConfigSettings,
+  DefaultConfig
 } from './public_types';
 import { StorageCache } from './storage/storage_cache';
 import { RemoteConfigFetchClient } from './client/remote_config_fetch_client';
@@ -52,7 +53,7 @@ export class RemoteConfig implements RemoteConfigType {
     minimumFetchIntervalMillis: DEFAULT_CACHE_MAX_AGE_MILLIS
   };
 
-  defaultConfig: { [key: string]: string | number | boolean } = {};
+  defaultConfig: DefaultConfig = {};
 
   get fetchTimeMillis(): number {
     return this._storageCache.getLastSuccessfulFetchTimestampMillis() || -1;

@@ -34,6 +34,7 @@ import {
   getBoolean,
   getNumber,
   getString,
+  getJson,
   getValue,
   isSupported
 } from '@firebase/remote-config';
@@ -104,6 +105,10 @@ export class RemoteConfigCompatImpl
 
   getString(key: string): string {
     return getString(this._delegate, key);
+  }
+
+  getJson(key: string): object | null {
+    return getJson(this._delegate, key);
   }
 
   getValue(key: string): ValueCompat {

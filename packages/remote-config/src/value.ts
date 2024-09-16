@@ -20,6 +20,7 @@ import { Value as ValueType, ValueSource } from '@firebase/remote-config-types';
 const DEFAULT_VALUE_FOR_BOOLEAN = false;
 const DEFAULT_VALUE_FOR_STRING = '';
 const DEFAULT_VALUE_FOR_NUMBER = 0;
+const DEFAULT_VALUE_FOR_JSON = null;
 
 const BOOLEAN_TRUTHY_VALUES = ['1', 'true', 't', 'yes', 'y', 'on'];
 
@@ -49,6 +50,20 @@ export class Value implements ValueType {
       num = DEFAULT_VALUE_FOR_NUMBER;
     }
     return num;
+  }
+
+  asJson(): object | null {
+    if (this._source === 'static') {
+      return DEFAULT_VALUE_FOR_JSON;
+    }
+    if(typeof this._value === 'object') {
+      return this._value;
+    }
+    try {
+      return JSON.parse(this._value);
+    } catch (e) {
+      return DEFAULT_VALUE_FOR_JSON;
+    }
   }
 
   getSource(): ValueSource {

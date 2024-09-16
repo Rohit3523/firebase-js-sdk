@@ -197,6 +197,21 @@ export function getString(remoteConfig: RemoteConfig, key: string): string {
 }
 
 /**
+ * Gets the value for the given key as a JSON object.
+ * Convenience method for calling <code>remoteConfig.getValue(key).asJson()</code>.
+ * 
+ * @param remoteConfig - The {@link RemoteConfig} instance.
+ * @param key - The name of the parameter.
+ * 
+ * @returns The value for the given key as a JSON object or null if the value is not a JSON object.
+ * 
+ * @public
+ */
+export function getJson(remoteConfig: RemoteConfig, key: string): object | null {
+  return getValue(getModularInstance(remoteConfig), key).asJson();
+}
+
+/**
  * Gets the {@link Value} for the given key.
  *
  * @param remoteConfig - The {@link RemoteConfig} instance.
